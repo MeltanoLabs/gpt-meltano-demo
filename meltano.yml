@@ -1,0 +1,44 @@
+version: 1
+default_environment: dev
+project_id: adad44a4-c92f-44b5-b2db-bf75cef299e9
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-beautifulsoup
+    namespace: tap_beautifulsoup
+    pip_url: git+https://github.com/aaronsteers/tap-beautifulsoup.git
+  loaders:
+  - name: target-chromadb
+    namespace: target_chromadb
+    pip_url: git+https://github.com/meltanolabs/target-chromadb.git
+  mappers:
+  - name: map-gpt-embeddings
+    namespace: map_gpt_embeddings
+    pip_url: git+https://github.com/meltanolabs/map-gpt-embeddings.git
+    executable: map-gpt-embeddings
+    settings:
+    - name: openai_api_key
+      kind: password
+      value: $OPENAI_API_KEY
+    # config:
+    #   openai_api_key: $OPENAI_API_KEY
+    mappings:
+    - name: add-embeddings
+      config:
+        openai_api_key: $OPENAI_API_KEY
+  utilities:
+  - name: gpt
+    namespace: gpt
+    executable: gpt_ext
+    pip_url: git+https://github.com/meltanolabs/gpt-ext.git
+    settings:
+    - name: openai_api_key
+      kind: password
+    config:
+      openai_api_key: ${OPENAI_API_KEY}
+    commands:
+      chat:
+        args: chat
