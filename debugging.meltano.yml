@@ -12,17 +12,6 @@ jobs:
   tasks:
   - tap-beautifulsoup add-embeddings target-chromadb
 plugins:
-  loaders:
-  - name: target-singer-jsonl-raw
-    inherit_from: target-singer-jsonl
-    config:
-      local:
-        folder: output/singer/raw/
-  - name: target-singer-jsonl-enriched
-    inherit_from: target-singer-jsonl
-    config:
-      local:
-        folder: output/singer/enriched/
   extractors:
   - name: tap-singer-jsonl-raw
     inherit_from: tap-singer-jsonl
@@ -38,3 +27,14 @@ plugins:
       local:
         folders:
         - output/singer/enriched/page_content
+  loaders:
+  - name: target-singer-jsonl-raw
+    inherit_from: target-singer-jsonl
+    config:
+      local:
+        folder: output/singer/raw/
+  - name: target-singer-jsonl-enriched
+    inherit_from: target-singer-jsonl
+    config:
+      local:
+        folder: output/singer/enriched/

@@ -2,7 +2,7 @@ version: 1
 default_environment: dev
 project_id: GPT Meltano Demo
 include_paths:
-- "**/*.meltano.yml"
+- '**/*.meltano.yml'
 environments:
 - name: dev
 - name: staging
@@ -31,13 +31,20 @@ plugins:
     executable: gpt_ext
     settings:
     - name: openai_api_key
+      env: GPT_EXT_OPENAI_API_KEY
       kind: password
+    - name: chroma_dir
+      env: GPT_EXT_CHROMA_DIR
+      kind: string
+    - name: chat_history_dir
+      env: GPT_EXT_CHAT_HISTORY_DIR
+      kind: string
     commands:
-      chat:
-        args: chat
+      chat: chat
     config:
       openai_api_key: ${OPENAI_API_KEY}
       chroma_dir: output/chromadb/
+      chat_history_dir: output/chat_history/
   mappers:
   - name: map-gpt-embeddings
     namespace: map_gpt_embeddings
