@@ -20,6 +20,10 @@ plugins:
     # pip_url: -e ../target-chromadb
     config:
       db_directory: output/chromadb/
+  - name: target-chromadb-jaffle
+    inherit_from: target-chromadb
+    config:
+      db_directory: output/chromadb-jaffle/
   - name: target-singer-jsonl
     variant: kgpayne
     pip_url: target-singer-jsonl
