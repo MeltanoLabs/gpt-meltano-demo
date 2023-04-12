@@ -1,6 +1,8 @@
 version: 1
 default_environment: dev
-project_id: adad44a4-c92f-44b5-b2db-bf75cef299e9
+project_id: GPT Meltano Demo
+include_paths:
+- "**/*.meltano.yml"
 environments:
 - name: dev
 - name: staging
@@ -10,35 +12,41 @@ plugins:
   - name: tap-beautifulsoup
     namespace: tap_beautifulsoup
     pip_url: git+https://github.com/aaronsteers/tap-beautifulsoup.git
+    # pip_url: -e ../tap-beautifulsoup
   loaders:
   - name: target-chromadb
     namespace: target_chromadb
     pip_url: git+https://github.com/meltanolabs/target-chromadb.git
+    # pip_url: -e ../target-chromadb
+    config:
+      db_directory: output/chromadb/
+  - name: target-singer-jsonl
+    variant: kgpayne
+    pip_url: target-singer-jsonl
+  utilities:
+  - name: gpt
+    namespace: gpt
+    pip_url: git+https://github.com/meltanolabs/gpt-ext.git
+    # pip_url: -e ../gpt-ext
+    executable: gpt_ext
+    settings:
+    - name: openai_api_key
+      kind: password
+    commands:
+      chat:
+        args: chat
+    config:
+      openai_api_key: ${OPENAI_API_KEY}
+      chroma_dir: output/chromadb/
   mappers:
   - name: map-gpt-embeddings
     namespace: map_gpt_embeddings
     pip_url: git+https://github.com/meltanolabs/map-gpt-embeddings.git
+    # pip_url: -e ../map-gpt-embeddings
     executable: map-gpt-embeddings
     settings:
     - name: openai_api_key
       kind: password
-      value: $OPENAI_API_KEY
-    # config:
-    #   openai_api_key: $OPENAI_API_KEY
     mappings:
     - name: add-embeddings
-      config:
-        openai_api_key: $OPENAI_API_KEY
-  utilities:
-  - name: gpt
-    namespace: gpt
-    executable: gpt_ext
-    pip_url: git+https://github.com/meltanolabs/gpt-ext.git
-    settings:
-    - name: openai_api_key
-      kind: password
-    config:
-      openai_api_key: ${OPENAI_API_KEY}
-    commands:
-      chat:
-        args: chat
+      config: {}

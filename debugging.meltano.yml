@@ -1,0 +1,40 @@
+jobs:
+- name: test-step1
+  tasks:
+  - tap-beautifulsoup target-singer-jsonl-raw
+- name: test-step2
+  tasks:
+  - tap-singer-jsonl-raw add-embeddings target-singer-jsonl-enriched
+- name: test-step3
+  tasks:
+  - tap-singer-jsonl-enriched target-chromadb
+- name: test-end-to-end
+  tasks:
+  - tap-beautifulsoup add-embeddings target-chromadb
+plugins:
+  loaders:
+  - name: target-singer-jsonl-raw
+    inherit_from: target-singer-jsonl
+    config:
+      local:
+        folder: output/singer/raw/
+  - name: target-singer-jsonl-enriched
+    inherit_from: target-singer-jsonl
+    config:
+      local:
+        folder: output/singer/enriched/
+  extractors:
+  - name: tap-singer-jsonl-raw
+    inherit_from: tap-singer-jsonl
+    pip_url: tap-singer-jsonl
+    config:
+      local:
+        folders:
+        - output/singer/raw/page_content
+  - name: tap-singer-jsonl-enriched
+    inherit_from: tap-singer-jsonl
+    pip_url: tap-singer-jsonl
+    config:
+      local:
+        folders:
+        - output/singer/enriched/page_content
