@@ -25,8 +25,16 @@ In low-tech terms, an array of ~1,500 floats. More specifically, a numeric repre
 
 ### LangChain
 
-[TODO]
+A an open source tool which streamlines “chaining” together of multiple LLM tasks.
 
 ### OpenAI
 
-[TODO]
+The company which provides GPT, ChatGPT, and a number of other AI products. OpenAI also provides the Embeddings API used in map-gpt-embeddings.
+
+### Vector Store
+
+A specialized database for analyzing vector embeddings.
+
+### ChromaDB
+
+An open source and pip-installable vector store database.
