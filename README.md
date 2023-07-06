@@ -1,4 +1,4 @@
-# Meltano GTP Demo
+# Meltano GPT Demo
 
 This Meltano project demonstrates how to apply Meltano's ELT+ processes to LLM, GPT and Chat applications.
 
